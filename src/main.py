@@ -1,22 +1,33 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from login import login_to_home
-from pages import get_page
-from line_message import send_text_message
+from config import (
+    DISCORD_WEBHOOK_URL,
+    EMAIL,
+    LOGIN_PAGE_URL,
+    MITSUI_SUMITOMO_CARD_DETAIL_PAGE_XPATH,
+    MITSUI_SUMITOMO_CARD_FAMILY_CARD_XPATH,
+    PASSWORD,
+)
+from discord_client import DiscordClient
+from moneyforward import MoneyForward
 
 
 def main():
-    # Define Browser
-    options = webdriver.ChromeOptions()
-    service = Service(ChromeDriverManager().install())
-    browser = webdriver.Chrome(service=service, options=options)
+    """Retrieves information from MoneyForward and sends it to Discord.
 
-    # login
-    browser = login_to_home(browser=browser)
+    Returns:
+        None
+    """
+    money_forward = MoneyForward(
+        login_page_url=LOGIN_PAGE_URL,
+        email=EMAIL,
+        password=PASSWORD,
+        mitsui_sumitomo_card_detail_page_xpath=MITSUI_SUMITOMO_CARD_DETAIL_PAGE_XPATH,
+        mitsui_sumitomo_card_family_card_xpath=MITSUI_SUMITOMO_CARD_FAMILY_CARD_XPATH,
+    )
+    family_card_amount = money_forward.get_family_card_amount()
 
-    # '資産'ページに移動
-    asset_page = get_page(browser=browser, target_page="asset")
+    discord_client = DiscordClient(DISCORD_WEBHOOK_URL)
+    discord_client.send_family_card_amount(family_card_amount)
 
 
-main()
+if __name__ == "__main__":
+    main()
