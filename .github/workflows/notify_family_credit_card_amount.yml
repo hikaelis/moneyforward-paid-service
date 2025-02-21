@@ -1,0 +1,30 @@
+name: Run Monthly Main Script
+
+on:
+  schedule:
+    - cron: "0 0 1 * *" # 毎月1日 00:00 UTC に実行
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.9"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate .env file from Secret
+        run: echo "${{ secrets.ENV }}" > .env
+
+      - name: Run main.py
+        run: python src/main.py

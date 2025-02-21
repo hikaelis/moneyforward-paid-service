@@ -3,28 +3,39 @@
 詳細は以下の通りです。
 
 # 取得したい情報
+
 - 三井住友カードの家族カードの引き落とし額
 
 # 環境
+
 - Python 3.11.9
   すでに.venvに環境を作ったのでそれを利用してください。
 - ブラウザの自動操作にはseleniumとbeautifulsoupを使用してください。
 - discordの操作にはdiscord.pyを使用してください。
 
 # 実行フロー
+
 1. マネーフォワードfor住信SBIネット銀行にログインしトップページに入る
-  - ログインURLとログインに必要な情報は@.env に記載しています。
-  - ログイン画面のhtmlは、@/data/html/login.mhtmlです。
+
+- ログインURLとログインに必要な情報は@.env に記載しています。
+- ログイン画面のhtmlは、@/data/html/login.mhtmlです。
+
 2. 三井住友カードの詳細ページに移動する
-  - トップページのhtmlは、@/data/html/top.mhtmlです。
-  - 三井住友カードの詳細ページに移動するリンクは、@/.envにXPathを記載しています。
+
+- トップページのhtmlは、@/data/html/top.mhtmlです。
+- 三井住友カードの詳細ページに移動するリンクは、@/.envにXPathを記載しています。
+
 3. 三井住友カードの詳細ページから、家族カードの引き落とし額を取得する。
-  - 三井住友カードの詳細ページのhtmlは@/data/html/mitsui_credit_detail.mhtmlです。
-  - 引き落とし額のXPathは@/.envにXPathを記載しています。
+
+- 三井住友カードの詳細ページのhtmlは@/data/html/mitsui_credit_detail.mhtmlです。
+- 引き落とし額のXPathは@/.envにXPathを記載しています。
+
 4. Discordにメッセージを送信する。
-  - Discordのwebhook URLは@/.envに記載しています。
+
+- Discordのwebhook URLは@/.envに記載しています。
 
 # 実装方法
+
 - ./src/にソースコードを生成してください。
 - ./src/main.pyをエントリーポイントにしてください。
 - ブラウザ操作とDiscord操作の処理ははクラスに分けてください。
