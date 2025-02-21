@@ -1,4 +1,4 @@
-name: Run Monthly Main Script
+name: Notify Family Credit Card Amount
 
 on:
   schedule:
