@@ -24,7 +24,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Generate .env file from Secret
-        run: echo "${{ secrets.ENV }}" > .env
+        run: |
+          echo "${{ secrets.ENV }}" > .env
+          cat .env
 
       - name: Run main.py
         run: python src/main.py
